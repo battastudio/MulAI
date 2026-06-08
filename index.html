@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Multi-AI</title>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header id="topbar">
+    <span class="tb-label">Import logins from your browser:</span>
+    <button class="tb-btn" data-import="edge">Edge</button>
+    <button class="tb-btn" data-import="chrome">Chrome</button>
+    <span id="importStatus" class="tb-status"></span>
+    <button id="viewToggle" class="tb-btn" title="Switch between grid and mobile columns">▥ Grid</button>
+  </header>
+
+  <main id="grid">
+    <section class="panel">
+      <div class="phead"><span class="dot claude"></span>Claude
+        <button class="login" data-login="claude" title="Open a login window">Log in</button>
+        <button class="reload" data-reload="claude" title="Reload">⟳</button>
+      </div>
+      <webview id="wv-claude" class="view"
+        src="https://claude.ai/new"
+        partition="persist:multiai"
+        useragent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+        allowpopups></webview>
+    </section>
+
+    <section class="panel">
+      <div class="phead"><span class="dot gemini"></span>Gemini
+        <button class="login" data-login="gemini" title="Open a login window">Log in</button>
+        <button class="reload" data-reload="gemini" title="Reload">⟳</button>
+      </div>
+      <webview id="wv-gemini" class="view"
+        src="https://gemini.google.com/app"
+        partition="persist:multiai"
+        useragent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+        allowpopups></webview>
+    </section>
+
+    <section class="panel">
+      <div class="phead"><span class="dot deepseek"></span>DeepSeek
+        <button class="login" data-login="deepseek" title="Open a login window">Log in</button>
+        <button class="reload" data-reload="deepseek" title="Reload">⟳</button>
+      </div>
+      <webview id="wv-deepseek" class="view"
+        src="https://chat.deepseek.com/"
+        partition="persist:multiai"
+        useragent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+        allowpopups></webview>
+    </section>
+
+    <section class="panel">
+      <div class="phead"><span class="dot qwen"></span>Qwen
+        <button class="login" data-login="qwen" title="Open a login window">Log in</button>
+        <button class="reload" data-reload="qwen" title="Reload">⟳</button>
+      </div>
+      <webview id="wv-qwen" class="view"
+        src="https://chat.qwen.ai/"
+        partition="persist:multiai"
+        useragent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+        allowpopups></webview>
+    </section>
+  </main>
+
+  <footer>
+    <div id="attachments"></div>
+    <div class="input-row">
+      <textarea id="prompt" placeholder="Type a message (or paste an image) and press Enter — it goes to all four panels…"></textarea>
+      <button id="sendBtn">Send to all</button>
+      <span id="statusLine"></span>
+    </div>
+  </footer>
+
+  <script src="renderer.js"></script>
+</body>
+</html>
