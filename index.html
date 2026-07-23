@@ -11,67 +11,41 @@
     <button class="tb-btn" data-import="edge">Edge</button>
     <button class="tb-btn" data-import="chrome">Chrome</button>
     <span id="importStatus" class="tb-status"></span>
+    <button id="pickerBtn" class="tb-btn" title="Choose which AI tools to show">⚙ AIs</button>
+    <button id="pasteAllToggle" class="tb-btn" title="When on, pasting an image uploads it into every panel">🖼 Paste-all</button>
+    <button id="syncToggle" class="tb-btn" title="Scroll all panels together (best-effort)">⇅ Sync</button>
+    <button id="themeToggle" class="tb-btn" title="Switch light / dark theme">☾ Dark</button>
     <button id="viewToggle" class="tb-btn" title="Switch between grid and mobile columns">▥ Grid</button>
   </header>
 
-  <main id="grid">
-    <section class="panel">
-      <div class="phead"><span class="dot claude"></span>Claude
-        <button class="login" data-login="claude" title="Open a login window">Log in</button>
-        <button class="reload" data-reload="claude" title="Reload">⟳</button>
-      </div>
-      <webview id="wv-claude" class="view"
-        src="https://claude.ai/new"
-        partition="persist:multiai"
-        useragent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
-        allowpopups></webview>
-    </section>
-
-    <section class="panel">
-      <div class="phead"><span class="dot gemini"></span>Gemini
-        <button class="login" data-login="gemini" title="Open a login window">Log in</button>
-        <button class="reload" data-reload="gemini" title="Reload">⟳</button>
-      </div>
-      <webview id="wv-gemini" class="view"
-        src="https://gemini.google.com/app"
-        partition="persist:multiai"
-        useragent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
-        allowpopups></webview>
-    </section>
-
-    <section class="panel">
-      <div class="phead"><span class="dot deepseek"></span>DeepSeek
-        <button class="login" data-login="deepseek" title="Open a login window">Log in</button>
-        <button class="reload" data-reload="deepseek" title="Reload">⟳</button>
-      </div>
-      <webview id="wv-deepseek" class="view"
-        src="https://chat.deepseek.com/"
-        partition="persist:multiai"
-        useragent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
-        allowpopups></webview>
-    </section>
-
-    <section class="panel">
-      <div class="phead"><span class="dot qwen"></span>Qwen
-        <button class="login" data-login="qwen" title="Open a login window">Log in</button>
-        <button class="reload" data-reload="qwen" title="Reload">⟳</button>
-      </div>
-      <webview id="wv-qwen" class="view"
-        src="https://chat.qwen.ai/"
-        partition="persist:multiai"
-        useragent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
-        allowpopups></webview>
-    </section>
-  </main>
+  <!-- Panels are rendered dynamically from the site registry in renderer.js. -->
+  <main id="grid"></main>
 
   <footer>
     <div id="attachments"></div>
     <div class="input-row">
-      <textarea id="prompt" placeholder="Type a message (or paste an image) and press Enter — it goes to all four panels…"></textarea>
+      <textarea id="prompt" placeholder="Type a message (or paste an image) and press Enter — it goes to every open panel…"></textarea>
       <button id="sendBtn">Send to all</button>
       <span id="statusLine"></span>
     </div>
   </footer>
+
+  <!-- AI picker / settings modal -->
+  <div id="picker" class="modal">
+    <div class="modal-card">
+      <div class="modal-head">
+        <b>Choose AI tools</b>
+        <button id="pickerClose" title="Close">✕</button>
+      </div>
+      <div id="pickerList" class="picker-list"></div>
+      <div class="add-ai">
+        <input id="addName" type="text" placeholder="Name (e.g. My AI)" />
+        <input id="addUrl" type="text" placeholder="https://chat.example.com" />
+        <button id="addBtn" class="tb-btn">Add your own</button>
+      </div>
+      <div class="picker-note">Tip: some sites (e.g. ChatGPT, Grok) use bot detection and may refuse to load or send inside an embedded panel.</div>
+    </div>
+  </div>
 
   <script src="renderer.js"></script>
 </body>

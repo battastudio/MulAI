@@ -12,4 +12,14 @@ contextBridge.exposeInMainWorld('multiai', {
 
   // Puts a pasted image on the OS clipboard so panels can paste it in.
   writeClipboardImage: (dataURL) => ipcRenderer.invoke('clipboard-image', { dataURL }),
+
+  // Focuses a specific webview's contents (before we focus the composer element).
+  focusContents: (webContentsId) => ipcRenderer.invoke('focus-contents', webContentsId),
+
+  // Pastes the OS clipboard into a specific webview's contents (paste only).
+  pasteInto: (webContentsId) => ipcRenderer.invoke('paste-into', webContentsId),
+
+  // Simulates a real file drag-and-drop of an image onto a panel at (x, y).
+  dropImage: (webContentsId, dataURL, x, y) =>
+    ipcRenderer.invoke('drop-image', { id: webContentsId, dataURL, x, y }),
 });
