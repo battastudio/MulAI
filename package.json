@@ -2,8 +2,8 @@
   "name": "multi-ai-desktop",
   "version": "1.0.0",
   "description": "Claude, Gemini, DeepSeek and Qwen in one window. Type once, send to all.",
-  "license": "ISC",
-  "author": "",
+  "license": "MIT",
+  "author": "Hassan Al-Najjar",
   "type": "commonjs",
   "main": "main.js",
   "scripts": {
