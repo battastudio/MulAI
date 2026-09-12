@@ -1,7 +1,8 @@
 {
   "permissions": {
     "allow": [
-      "Skill(claude-api)"
+      "Skill(claude-api)",
+      "mcp__lean-ctx__ctx_shell"
     ]
   }
 }

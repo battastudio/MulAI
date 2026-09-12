@@ -15,7 +15,7 @@ Type your prompt **once** and it goes to **all of them at the same time**. No AP
 [![Zero runtime deps](https://img.shields.io/badge/runtime%20deps-zero-22d3ee)](CONTRIBUTING.md)
 [![License: MIT](https://img.shields.io/badge/License-MIT-5eead4.svg)](LICENSE)
 
-**[🌐 Live page →](https://hassanannajjar.github.io/Multi-Ai/)**
+**[🌐 Live page →](https://battastudio.github.io/MulAI/)**
 
 </div>
 
@@ -99,8 +99,8 @@ Each site in the catalog (`renderer/catalog.js`) holds its URL, login URL, brand
 ## 🚀 Quick start
 
 ```bash
-git clone https://github.com/hassanannajjar/Multi-Ai.git
-cd Multi-Ai
+git clone https://github.com/battastudio/MulAI.git
+cd MulAI
 
 npm install     # downloads Electron (~150 MB, one-time)
 npm start       # opens the Multi-AI window
