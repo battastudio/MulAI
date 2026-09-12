@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Multi-AI — One prompt in. Every AI out.</title>
+<meta name="description" content="Every AI chat — Claude, ChatGPT, Gemini, DeepSeek, Qwen and more — in one desktop window. Type once, send to all. No API keys." />
+<meta property="og:title" content="Multi-AI — One prompt in. Every AI out." />
+<meta property="og:description" content="19 AI chats side by side in one window. Broadcast one prompt to all of them — no API keys, no billing." />
+<meta property="og:image" content="screenshots/grid.png" />
+<meta property="og:type" content="website" />
+<link rel="icon" href="icon.png" />
+<style>
+  :root{
+    --bg:#0a0f14; --panel:#111820; --panel2:#0e141b; --line:#1e2a36;
+    --ink:#e8eef5; --muted:#93a4b5; --teal:#5eead4; --cyan:#22d3ee;
+    --radius:14px; --max:1040px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--teal); text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:var(--max); margin:0 auto; padding:0 20px}
+  code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+  h2{font-size:1.7rem; margin:0 0 .3em; letter-spacing:-.01em}
+  section{padding:56px 0; border-top:1px solid var(--line)}
+  .muted{color:var(--muted)}
+
+  /* Hero */
+  header.hero{
+    text-align:center; padding:72px 20px 40px;
+    background:radial-gradient(900px 420px at 50% -10%, rgba(34,211,238,.14), transparent 70%);
+  }
+  .hero img.logo{width:104px; height:104px; border-radius:24px}
+  .hero h1{font-size:3rem; margin:.25em 0 .1em; letter-spacing:-.03em}
+  .hero .tag{font-size:1.35rem; color:var(--teal); font-weight:600; margin:0 0 .4em}
+  .hero .providers{max-width:720px; margin:0 auto 1.2em; color:var(--muted)}
+  .hero .providers b{color:var(--ink)}
+  .badges{display:flex; gap:8px; flex-wrap:wrap; justify-content:center; margin:16px 0 24px}
+  .badges img{height:22px}
+  .cta{display:flex; gap:12px; flex-wrap:wrap; justify-content:center}
+  .btn{
+    display:inline-block; padding:12px 22px; border-radius:999px; font-weight:600;
+    border:1px solid var(--line);
+  }
+  .btn.primary{background:linear-gradient(135deg,var(--teal),var(--cyan)); color:#05232a; border:0}
+  .btn.primary:hover{opacity:.92; text-decoration:none}
+  .btn.ghost{background:var(--panel); color:var(--ink)}
+  .btn.ghost:hover{border-color:var(--teal); text-decoration:none}
+
+  .shot{width:100%; border-radius:var(--radius); border:1px solid var(--line); display:block}
+  figure{margin:0}
+  figcaption{color:var(--muted); font-size:.9rem; text-align:center; margin-top:10px}
+  .hero .shotwrap{max-width:900px; margin:40px auto 0}
+
+  /* Grids */
+  .grid{display:grid; gap:16px}
+  .tools{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+  .gallery{grid-template-columns:repeat(2,1fr)}
+  .card{
+    background:var(--panel); border:1px solid var(--line); border-radius:var(--radius);
+    padding:18px 20px;
+  }
+  .card .ico{font-size:1.5rem}
+  .card h3{margin:.4em 0 .2em; font-size:1.05rem}
+  .card p{margin:0; color:var(--muted); font-size:.95rem}
+
+  ul.feat{list-style:none; padding:0; margin:0; display:grid; gap:12px}
+  ul.feat li{background:var(--panel2); border:1px solid var(--line); border-radius:12px; padding:12px 16px}
+
+  /* How it works */
+  .flow{display:flex; align-items:center; gap:12px; flex-wrap:wrap; justify-content:center; margin:8px 0 18px}
+  .flow .node{background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:10px 16px; font-weight:600}
+  .flow .arrow{color:var(--cyan); font-size:1.3rem}
+  .fan{display:flex; gap:8px; flex-wrap:wrap; justify-content:center}
+  .fan .pill{border:1px solid var(--line); border-radius:999px; padding:6px 14px; font-size:.9rem; color:var(--muted)}
+
+  pre{
+    background:var(--panel2); border:1px solid var(--line); border-radius:12px;
+    padding:16px 18px; overflow:auto; font-size:.9rem;
+  }
+  pre .c{color:var(--muted)}
+
+  footer{border-top:1px solid var(--line); padding:40px 20px; text-align:center; color:var(--muted)}
+  footer a{margin:0 8px}
+
+  @media(max-width:640px){
+    .hero h1{font-size:2.2rem}
+    .hero .tag{font-size:1.1rem}
+    .gallery{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <img class="logo" src="icon.png" alt="Multi-AI icon" />
+  <h1>Multi-AI</h1>
+  <p class="tag">One prompt in. Every AI out.</p>
+  <p class="providers">
+    <b>Claude · ChatGPT · Gemini · DeepSeek · Qwen · Grok · Perplexity · Copilot</b>
+    and more — side by side in one window. Type your prompt <b>once</b> and it goes
+    to <b>all of them at the same time</b>. No API keys, no billing — each panel is a
+    real, logged-in browser view.
+  </p>
+  <div class="badges">
+    <img src="https://img.shields.io/badge/Electron-33-47848F?logo=electron&logoColor=white" alt="Electron 33" />
+    <img src="https://img.shields.io/badge/macOS%20·%20Windows%20·%20Linux-000000?logo=linux&logoColor=white" alt="Cross-platform" />
+    <img src="https://img.shields.io/badge/JavaScript-vanilla-F7DF1E?logo=javascript&logoColor=black" alt="Vanilla JS" />
+    <img src="https://img.shields.io/badge/runtime%20deps-zero-22d3ee" alt="Zero runtime deps" />
+    <img src="https://img.shields.io/badge/License-MIT-5eead4.svg" alt="MIT License" />
+  </div>
+  <div class="cta">
+    <a class="btn primary" href="https://github.com/hassanannajjar/Multi-Ai">View on GitHub</a>
+    <a class="btn ghost" href="#quick-start">Quick start</a>
+  </div>
+  <div class="shotwrap">
+    <img class="shot" src="screenshots/grid.png" alt="Multi-AI grid view: one prompt broadcast to Claude, Gemini, DeepSeek and Qwen side by side" />
+  </div>
+</header>
+
+<section id="tools">
+  <div class="wrap">
+    <h2>🧰 The tools</h2>
+    <div class="grid tools">
+      <div class="card"><div class="ico">📢</div><h3>Broadcast</h3><p>Type once, hit <b>Send to all</b> (or Enter). Every panel also has its own <b>➤</b>.</p></div>
+      <div class="card"><div class="ico">🧩</div><h3>AI picker</h3><p>19 built-in AIs + add your own by URL — with an <b>Advanced</b> editor for custom selectors.</p></div>
+      <div class="card"><div class="ico">📚</div><h3>Prompt library</h3><p>Save prompts you reuse and drop them back into the composer in one click.</p></div>
+      <div class="card"><div class="ico">⬇️</div><h3>Export / compare</h3><p>Grab every panel's latest answer into one Markdown file — prompt on top, one section per AI.</p></div>
+      <div class="card"><div class="ico">⌘</div><h3>Command palette</h3><p><code>⌘/Ctrl+K</code> to run any action or jump to a panel, no mouse needed.</p></div>
+      <div class="card"><div class="ico">⚙️</div><h3>Settings</h3><p>Default view, theme, paste-all, scroll-sync, and a User-Agent override — one home.</p></div>
+      <div class="card"><div class="ico">🍪</div><h3>Import logins</h3><p>Pull auth cookies from Edge/Chrome (macOS/Windows/Linux) so you skip re-logging-in.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="screenshots">
+  <div class="wrap">
+    <h2>📸 Screenshots</h2>
+    <div class="grid gallery">
+      <figure><img class="shot" src="screenshots/picker.png" alt="AI picker modal with 19 providers and an add-your-own form" /><figcaption>⚙️ AI picker + add your own</figcaption></figure>
+      <figure><img class="shot" src="screenshots/palette.png" alt="Command palette listing every action" /><figcaption>⌘ Command palette (⌘/Ctrl+K)</figcaption></figure>
+      <figure><img class="shot" src="screenshots/prompts.png" alt="Prompt library with saved reusable prompts" /><figcaption>📚 Prompt library</figcaption></figure>
+      <figure><img class="shot" src="screenshots/settings.png" alt="Settings modal: view, theme, paste-all, sync, UA override" /><figcaption>⚙️ Settings</figcaption></figure>
+    </div>
+    <figure style="margin-top:16px">
+      <img class="shot" src="screenshots/columns.png" alt="Mobile-columns view — panels side by side, scroll horizontally" />
+      <figcaption>Mobile-columns view</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="highlights">
+  <div class="wrap">
+    <h2>✨ Highlights</h2>
+    <ul class="feat">
+      <li>📢 <b>Broadcast to every panel</b> — one prompt, all models, at once.</li>
+      <li>🧩 <b>19 built-in AIs + custom sites</b> — Claude, ChatGPT, Gemini, Grok, Perplexity, Copilot, DeepSeek, Qwen, Le Chat (Mistral), Kimi, Meta AI, Poe, Pi, You.com, Doubao, Groq, HuggingChat, Character.AI, LMArena. Add any site by URL; teach it selectors via <b>Advanced</b>.</li>
+      <li>🔐 <b>Dedicated login window</b> — a real, full-size browser sharing the panels' session (clean Chrome UA so Google/Cloudflare don't block sign-in). Log in once, everywhere.</li>
+      <li>🍪 <b>Import logins from Edge/Chrome</b> — decrypts your existing cookies on macOS, Windows and Linux.</li>
+      <li>🖼️ <b>Paste an image to all panels</b> — <code>⌘/Ctrl+V</code> an image and it uploads into every AI (verified before the prompt sends).</li>
+      <li>🎛️ <b>Built for focus</b> — 2×2 grid ⇄ mobile columns, light/dark, drag headers to reorder, double-click to maximize, optional synced scroll, <code>↑/↓</code> prompt history, <code>⌘/Ctrl+K</code> command palette.</li>
+    </ul>
+    <h3 style="margin-top:28px">Why no API keys?</h3>
+    <p class="muted">These sites block plain web embedding (Cloudflare bot checks + anti-iframe rules). Multi-AI sidesteps that entirely: <b>every panel is a genuine Chromium browser view</b> pointing at the real website. You use your own logged-in accounts — nothing is proxied, no keys, no per-token cost.</p>
+  </div>
+</section>
+
+<section id="how">
+  <div class="wrap">
+    <h2>🛠 How it works</h2>
+    <div class="flow">
+      <span class="node">You — one prompt</span>
+      <span class="arrow">→</span>
+      <span class="node">broadcast()</span>
+      <span class="arrow">→</span>
+      <span class="node">inject into every panel</span>
+    </div>
+    <div class="fan">
+      <span class="pill">Claude webview</span>
+      <span class="pill">Gemini webview</span>
+      <span class="pill">DeepSeek webview</span>
+      <span class="pill">Qwen webview</span>
+      <span class="pill">…</span>
+    </div>
+    <p class="muted" style="margin-top:18px">Each site in the catalog (<code>renderer/catalog.js</code>) holds its URL, login URL, brand color, and optional CSS selectors for the input box and send button. <code>broadcast()</code> injects a tiny script into every enabled panel to fill the box and click send. Answers render in place on each real AI website, using your logged-in session.</p>
+    <p class="muted"><b>Tech:</b> Electron 33 (Chromium <code>&lt;webview&gt;</code> panels) · vanilla JS/HTML/CSS · no framework, no bundler, zero runtime dependencies. Auth persists in an Electron session partition; UI preferences in <code>localStorage</code>.</p>
+  </div>
+</section>
+
+<section id="quick-start">
+  <div class="wrap">
+    <h2>🚀 Quick start</h2>
+<pre><span class="c"># clone and run</span>
+git clone https://github.com/hassanannajjar/Multi-Ai.git
+cd Multi-Ai
+
+npm install     <span class="c"># downloads Electron (~150 MB, one-time)</span>
+npm start       <span class="c"># opens the Multi-AI window</span></pre>
+    <p class="muted"><b>First run:</b> click <b>Log in</b> (or <b>Import</b>) and sign in to the AIs you want. If a panel shows a Cloudflare check, complete it right inside the panel — it's a real browser. Then type a prompt and <b>Send to all</b>.</p>
+    <p class="muted">Build a standalone app bundle:</p>
+<pre>npm run package:mac      <span class="c"># → dist/Multi-AI-darwin-*</span>
+npm run package:win      <span class="c"># → dist/Multi-AI-win32-x64</span>
+npm run package:linux    <span class="c"># → dist/Multi-AI-linux-x64</span></pre>
+    <p class="muted">No <code>.env</code>, no config, no API keys.</p>
+  </div>
+</section>
+
+<section id="limitations">
+  <div class="wrap">
+    <h2>🤔 Honest limitations</h2>
+    <ul class="feat">
+      <li><b>Windows/Linux cookie import is code-complete but lightly tested</b> — the decrypt math has self-checks, but real-profile import was verified on macOS only. On Windows, <code>sqlite3</code> must be on <code>PATH</code>.</li>
+      <li><b>Selectors can break.</b> Injection depends on each site's CSS selectors. When a site redesigns its input/send button, fix it in <code>renderer/catalog.js</code> (or the picker's <b>Advanced</b> fields).</li>
+      <li><b>Some logins are device-bound.</b> Google/Gemini cookies won't import; use the <b>Log in</b> window for those.</li>
+      <li><b>Bot-detection sites.</b> ChatGPT and Grok may challenge automation — complete any check inside the panel.</li>
+      <li><b>Per-site image/answer support varies.</b> Image paste and answer-export are best-effort heuristics across differing chat DOMs.</li>
+    </ul>
+  </div>
+</section>
+
+<footer>
+  <p>
+    <a href="https://github.com/hassanannajjar/Multi-Ai">GitHub</a> ·
+    <a href="https://github.com/hassanannajjar/Multi-Ai/blob/main/docs/tools.md">Tools</a> ·
+    <a href="https://github.com/hassanannajjar/Multi-Ai/blob/main/docs/sites.md">Adding AI sites</a> ·
+    <a href="https://github.com/hassanannajjar/Multi-Ai/blob/main/docs/cookie-import.md">Importing logins</a> ·
+    <a href="https://github.com/hassanannajjar/Multi-Ai/blob/main/docs/architecture.md">Architecture</a>
+  </p>
+  <p class="muted">MIT © 2026 Hassan Al-Najjar · A personal productivity tool — use responsibly, for personal use only.</p>
+</footer>
+
+</body>
+</html>

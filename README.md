@@ -15,6 +15,8 @@ Type your prompt **once** and it goes to **all of them at the same time**. No AP
 [![Zero runtime deps](https://img.shields.io/badge/runtime%20deps-zero-22d3ee)](CONTRIBUTING.md)
 [![License: MIT](https://img.shields.io/badge/License-MIT-5eead4.svg)](LICENSE)
 
+**[🌐 Live page →](https://hassanannajjar.github.io/Multi-Ai/)**
+
 </div>
 
 ---
