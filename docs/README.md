@@ -1,14 +1,10 @@
-# Screenshots
+# Multi-AI docs
 
-Drop your own screenshots here and they'll show up in the main README.
+Short, task-focused pages. Start with the [main README](../README.md) for install + overview.
 
-Expected filenames (referenced by `../README.md`):
+- **[Tools](tools.md)** — broadcast, prompt library, export/compare, command palette, settings, image paste.
+- **[Adding AI sites](sites.md)** — the picker, custom sites, and the Advanced selector editor.
+- **[Importing logins](cookie-import.md)** — pulling cookies from Edge/Chrome on macOS/Windows/Linux.
+- **[Architecture](architecture.md)** — the module map and how a send actually works (for contributors).
 
-| File | Shows | Suggested |
-|---|---|---|
-| `preview-grid.png` | The 2×2 panel grid with a prompt sent to all | ~1400px wide |
-| `preview-login.png` | The dedicated login window / Import logins flow | ~1400px wide |
-
-**How to capture:** run `npm start`, log in to a couple of AIs, send a prompt to all, then screenshot the window. PNG, trim the OS chrome.
-
-After adding them, add a matching `![...](docs/preview-grid.png)` line in `../README.md` (replace the commented preview note).
+Screenshots live in [`../.github/screenshots/`](../.github/screenshots).

@@ -10,13 +10,8 @@ const { app, BrowserWindow, ipcMain, clipboard, nativeImage, webContents } = req
 const path = require('node:path');
 const fs = require('node:fs');
 const os = require('node:os');
-const { importCookies } = require('./cookie-import');
-
-// A clean Chrome user-agent (no "Electron") — needed so Google doesn't block
-// sign-in, and to look like a normal browser to Cloudflare.
-const UA =
-  'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 ' +
-  '(KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36';
+const { importCookies } = require('./cookies');
+const { UA } = require('./constants');
 
 function allowPopups(contents) {
   contents.setWindowOpenHandler(() => ({
@@ -36,6 +31,7 @@ function createWindow() {
     webPreferences: {
       webviewTag: true,
       preload: path.join(__dirname, 'preload.js'),
+      sandbox: false, // preload requires ./constants (a local module)
     },
   });
   win.loadFile('index.html');

@@ -1,8 +1,12 @@
 // Bridge between the app window (renderer) and the main process.
 // Exposes a tiny, safe API for opening a dedicated login window.
 const { contextBridge, ipcRenderer } = require('electron');
+const { UA } = require('./constants');
 
 contextBridge.exposeInMainWorld('multiai', {
+  // Single source of truth for the spoofed UA (renderer can't require Node).
+  UA,
+
   // Opens the site in a full login window (shared session) and resolves
   // when that window is closed — so the panel can reload, now logged in.
   openLogin: (key, url) => ipcRenderer.invoke('open-login', { key, url }),

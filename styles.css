@@ -42,7 +42,17 @@ body {
 .tb-btn:hover { border-color: var(--accent); }
 .tb-btn:disabled { opacity: 0.5; cursor: default; }
 .tb-status { margin-left: 8px; color: var(--muted); }
-#pickerBtn { margin-left: auto; }
+
+/* Toolbar clusters: brand · Import · (spacer) · Tools · View */
+.brand { display: flex; align-items: center; gap: 7px; font-weight: 700; letter-spacing: 0.2px; padding-right: 6px; }
+.brand-mark {
+  display: inline-grid; place-items: center; width: 22px; height: 22px; border-radius: 7px;
+  background: linear-gradient(135deg, var(--accent), #9a6bff); color: #0a0d12; font-size: 13px;
+}
+.brand-name { font-size: 13px; }
+.tb-group { display: flex; align-items: center; gap: 6px; }
+.tb-group + .tb-group { margin-left: 10px; }
+.tb-spacer { flex: 1; }
 
 /* Light theme — override the dark vars. */
 body.light {
@@ -280,7 +290,7 @@ footer {
 }
 .picker-row:hover { background: var(--panel-2); }
 .picker-row .pname { font-weight: 600; }
-.picker-row span { display: inline-flex; align-items: center; gap: 7px; flex: 1; }
+.picker-row > span { display: inline-flex; align-items: center; gap: 7px; flex: 1; }
 .picker-url { color: var(--muted); font-size: 11px; font-weight: 400; }
 .picker-del {
   background: none;
@@ -336,3 +346,54 @@ body.dragging .view { pointer-events: none; }   /* let panels receive dragover *
 
 /* Active toggle button (e.g. scroll-sync on) */
 .tb-btn.on { background: var(--accent); color: #0a0d12; border-color: var(--accent); }
+
+/* ---- new tools: shared bits -------------------------------------------- */
+.empty { padding: 22px 14px; color: var(--muted); font-size: 12px; text-align: center; line-height: 1.5; }
+
+/* Advanced selector fields in the AI picker (collapsed by default) */
+.adv-fields { display: none; flex-direction: column; gap: 6px; padding: 0 14px 10px; }
+.adv-fields.open { display: flex; }
+.adv-fields input, .adv-fields select {
+  background: var(--panel-2); border: 1px solid var(--border); border-radius: 7px;
+  color: var(--text); padding: 6px 9px; font-size: 12px; font-family: inherit;
+}
+.adv-fields input:focus, .adv-fields select:focus { outline: none; border-color: var(--accent); }
+.picker-edit { background: none; border: none; color: var(--muted); cursor: pointer; font-size: 13px; }
+.picker-edit:hover { color: var(--accent); }
+
+/* Prompt library rows */
+.lib-row { display: flex; align-items: center; gap: 8px; padding: 4px 6px; }
+.lib-load {
+  flex: 1; text-align: left; background: var(--panel-2); border: 1px solid var(--border);
+  color: var(--text); border-radius: 8px; padding: 8px 10px; font-size: 12px; cursor: pointer;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.lib-load:hover { border-color: var(--accent); }
+
+/* Settings form */
+.set-grid { display: flex; flex-direction: column; gap: 12px; padding: 14px 16px; overflow-y: auto; }
+.set-grid label { display: flex; flex-direction: column; gap: 5px; font-size: 12px; color: var(--muted); }
+.set-grid select, .set-grid input[type="text"] {
+  background: var(--panel-2); border: 1px solid var(--border); border-radius: 7px;
+  color: var(--text); padding: 7px 9px; font-size: 13px; font-family: inherit;
+}
+.set-grid select:focus, .set-grid input:focus { outline: none; border-color: var(--accent); }
+.set-check { flex-direction: row !important; align-items: center; gap: 8px !important; color: var(--text) !important; }
+
+/* Command palette */
+.palette-card { width: 560px; }
+#paletteInput {
+  background: var(--panel); border: none; border-bottom: 1px solid var(--border);
+  color: var(--text); padding: 16px 18px; font-size: 15px; font-family: inherit; outline: none;
+}
+.cmd-list { overflow-y: auto; padding: 6px; max-height: 50vh; }
+.cmd-row { padding: 10px 12px; border-radius: 8px; font-size: 13px; cursor: pointer; }
+.cmd-row:hover, .cmd-row.active { background: var(--panel-2); }
+.cmd-row.active { outline: 1px solid var(--accent); outline-offset: -1px; }
+
+/* Shortcuts list */
+.sc-list { display: flex; flex-direction: column; gap: 9px; padding: 14px 18px; font-size: 12px; color: var(--muted); }
+.sc-list kbd {
+  background: var(--panel-2); border: 1px solid var(--border); border-bottom-width: 2px;
+  border-radius: 5px; padding: 1px 6px; font-size: 11px; color: var(--text); font-family: inherit;
+}

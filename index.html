@@ -7,46 +7,140 @@
 </head>
 <body>
   <header id="topbar">
-    <span class="tb-label">Import logins from your browser:</span>
-    <button class="tb-btn" data-import="edge">Edge</button>
-    <button class="tb-btn" data-import="chrome">Chrome</button>
-    <span id="importStatus" class="tb-status"></span>
-    <button id="pickerBtn" class="tb-btn" title="Choose which AI tools to show">⚙ AIs</button>
-    <button id="pasteAllToggle" class="tb-btn" title="When on, pasting an image uploads it into every panel">🖼 Paste-all</button>
-    <button id="syncToggle" class="tb-btn" title="Scroll all panels together (best-effort)">⇅ Sync</button>
-    <button id="themeToggle" class="tb-btn" title="Switch light / dark theme">☾ Dark</button>
-    <button id="viewToggle" class="tb-btn" title="Switch between grid and mobile columns">▥ Grid</button>
+    <div class="brand"><span class="brand-mark">◇</span><span class="brand-name">Multi-AI</span></div>
+
+    <div class="tb-group" role="group" aria-label="Import logins">
+      <span class="tb-label">Import:</span>
+      <button class="tb-btn" data-import="edge">Edge</button>
+      <button class="tb-btn" data-import="chrome">Chrome</button>
+      <span id="importStatus" class="tb-status"></span>
+    </div>
+
+    <div class="tb-spacer"></div>
+
+    <div class="tb-group" role="group" aria-label="Tools">
+      <button id="pickerBtn" class="tb-btn" title="Choose which AI tools to show">⚙ AIs</button>
+      <button id="promptsBtn" class="tb-btn" title="Saved prompt library">📚 Prompts</button>
+      <button id="exportBtn" class="tb-btn" title="Export every panel’s answer to Markdown">⬇ Export</button>
+      <button id="settingsBtn" class="tb-btn" title="Preferences">⚙ Settings</button>
+    </div>
+
+    <div class="tb-group" role="group" aria-label="View">
+      <button id="pasteAllToggle" class="tb-btn" title="When on, pasting an image uploads it into every panel">🖼 Paste-all</button>
+      <button id="syncToggle" class="tb-btn" title="Scroll all panels together (best-effort)">⇅ Sync</button>
+      <button id="themeToggle" class="tb-btn" title="Switch light / dark theme">☾ Dark</button>
+      <button id="viewToggle" class="tb-btn" title="Switch between grid and mobile columns">▥ Grid</button>
+      <button id="helpBtn" class="tb-btn" title="Keyboard shortcuts (?)">?</button>
+    </div>
   </header>
 
-  <!-- Panels are rendered dynamically from the site registry in renderer.js. -->
+  <!-- Panels are rendered dynamically from the site registry in renderer/catalog.js. -->
   <main id="grid"></main>
 
   <footer>
     <div id="attachments"></div>
     <div class="input-row">
-      <textarea id="prompt" placeholder="Type a message (or paste an image) and press Enter — it goes to every open panel…"></textarea>
+      <textarea id="prompt" placeholder="Type a message (or paste an image) and press Enter — it goes to every open panel.  ⌘K for commands…"></textarea>
       <button id="sendBtn">Send to all</button>
       <span id="statusLine"></span>
     </div>
   </footer>
 
-  <!-- AI picker / settings modal -->
+  <!-- AI picker / add-your-own modal -->
   <div id="picker" class="modal">
     <div class="modal-card">
-      <div class="modal-head">
-        <b>Choose AI tools</b>
-        <button id="pickerClose" title="Close">✕</button>
-      </div>
+      <div class="modal-head"><b>Choose AI tools</b><button id="pickerClose" title="Close">✕</button></div>
       <div id="pickerList" class="picker-list"></div>
       <div class="add-ai">
         <input id="addName" type="text" placeholder="Name (e.g. My AI)" />
         <input id="addUrl" type="text" placeholder="https://chat.example.com" />
+        <button id="advToggle" class="tb-btn" title="Advanced selectors">⚙</button>
         <button id="addBtn" class="tb-btn">Add your own</button>
       </div>
-      <div class="picker-note">Tip: some sites (e.g. ChatGPT, Grok) use bot detection and may refuse to load or send inside an embedded panel.</div>
+      <div id="advFields" class="adv-fields">
+        <input id="addInput" type="text" placeholder="Input selector (optional)" />
+        <input id="addSend" type="text" placeholder="Send-button selector (optional)" />
+        <input id="addFile" type="text" placeholder="File-input selector (optional)" />
+        <select id="addImageMode">
+          <option value="">Image mode: auto</option>
+          <option value="paste">paste</option>
+          <option value="file">file</option>
+        </select>
+      </div>
+      <div class="picker-note">Tip: some sites (e.g. ChatGPT, Grok) use bot detection and may refuse to load or send inside an embedded panel. Use Advanced to teach a custom site its selectors.</div>
     </div>
   </div>
 
-  <script src="renderer.js"></script>
+  <!-- Prompt library modal -->
+  <div id="prompts" class="modal">
+    <div class="modal-card">
+      <div class="modal-head"><b>Prompt library</b><button id="promptsClose" title="Close">✕</button></div>
+      <div id="promptList" class="picker-list"></div>
+      <div class="add-ai"><button id="promptSaveBtn" class="tb-btn">＋ Save current prompt</button></div>
+    </div>
+  </div>
+
+  <!-- Settings modal -->
+  <div id="settings" class="modal">
+    <div class="modal-card">
+      <div class="modal-head"><b>Settings</b><button id="settingsClose" title="Close">✕</button></div>
+      <div class="set-grid">
+        <label>Default view
+          <select id="setView"><option value="grid">Grid (2×2)</option><option value="columns">Columns</option></select>
+        </label>
+        <label>Theme
+          <select id="setTheme"><option value="dark">Dark</option><option value="light">Light</option></select>
+        </label>
+        <label class="set-check"><input id="setPaste" type="checkbox" /> Paste-all (upload pasted image to every panel)</label>
+        <label class="set-check"><input id="setSync" type="checkbox" /> Sync scrolling across panels</label>
+        <label>User-Agent override (blank = default Chrome UA)
+          <input id="setUa" type="text" placeholder="Mozilla/5.0 …" />
+        </label>
+      </div>
+      <div class="add-ai"><button id="setReset" class="tb-btn">↺ Reset to defaults</button></div>
+    </div>
+  </div>
+
+  <!-- Command palette -->
+  <div id="palette" class="modal">
+    <div class="modal-card palette-card">
+      <input id="paletteInput" type="text" placeholder="Type a command…  (Esc to close)" />
+      <div id="paletteList" class="cmd-list"></div>
+    </div>
+  </div>
+
+  <!-- Shortcuts / help -->
+  <div id="shortcuts" class="modal">
+    <div class="modal-card">
+      <div class="modal-head"><b>Keyboard shortcuts</b><button id="shortcutsClose" title="Close">✕</button></div>
+      <div class="sc-list">
+        <div><kbd>Enter</kbd> Send to all panels</div>
+        <div><kbd>Shift</kbd>+<kbd>Enter</kbd> New line</div>
+        <div><kbd>↑</kbd> / <kbd>↓</kbd> Recall prompt history (caret at edge)</div>
+        <div><kbd>⌘</kbd>/<kbd>Ctrl</kbd>+<kbd>K</kbd> Command palette</div>
+        <div><kbd>?</kbd> This help</div>
+        <div><kbd>Esc</kbd> Close any overlay</div>
+        <div>Drag a panel header to reorder · double-click to maximize</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Renderer modules — order matters: core → data → engines → UI → boot. -->
+  <script src="renderer/core.js"></script>
+  <script src="renderer/catalog.js"></script>
+  <script src="renderer/inject-text.js"></script>
+  <script src="renderer/inject-file.js"></script>
+  <script src="renderer/scroll-sync.js"></script>
+  <script src="renderer/panels.js"></script>
+  <script src="renderer/image.js"></script>
+  <script src="renderer/broadcast.js"></script>
+  <script src="renderer/toolbar.js"></script>
+  <script src="renderer/picker.js"></script>
+  <script src="renderer/prompt-library.js"></script>
+  <script src="renderer/settings.js"></script>
+  <script src="renderer/export.js"></script>
+  <script src="renderer/command-palette.js"></script>
+  <script src="renderer/shortcuts.js"></script>
+  <script src="renderer/app.js"></script>
 </body>
 </html>

@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <rect x="0" y="0" width="1024" height="1024" fill="#2E505E"/>
+  <g fill="none" stroke="#1C2E33" stroke-width="22" stroke-linejoin="round" stroke-linecap="round">
+    <!-- one input beam → prism → many AI outputs -->
+    <line x1="198" y1="512" x2="400" y2="512"/>
+    <line x1="720" y1="512" x2="880" y2="350"/>
+    <line x1="720" y1="512" x2="905" y2="512"/>
+    <line x1="720" y1="512" x2="880" y2="674"/>
+    <!-- prism body -->
+    <path d="M560 360 L720 512 L560 664 L400 512 Z" fill="#FBF4E6"/>
+    <!-- refraction facets -->
+    <path d="M560 360 L720 512 L560 512 Z" fill="#FFD65B"/>
+    <path d="M560 512 L720 512 L560 664 Z" fill="#F98C40"/>
+    <line x1="560" y1="360" x2="560" y2="664"/>
+    <!-- input + AI output nodes -->
+    <circle cx="150" cy="512" r="48" fill="#F98C40"/>
+    <circle cx="880" cy="350" r="48" fill="#FFD65B"/>
+    <circle cx="905" cy="512" r="48" fill="#FBF4E6"/>
+    <circle cx="880" cy="674" r="48" fill="#F98C40"/>
+  </g>
+</svg>
